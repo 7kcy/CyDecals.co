@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews — CYDecals.co</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0b0b;--surface:#111;--card:#161616;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--dim:#444;--mid:#777;--light:#aaa;--pale:#d8d8d8;--white:#f2f2f2;--pure:#fff}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Bricolage Grotesque',sans-serif;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;mix-blend-mode:screen}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(11,11,11,0.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.08em;color:var(--pure);text-decoration:none}
+.logo sub{font-size:0.45em;color:var(--dim);vertical-align:baseline;letter-spacing:0.1em}
+.nav-back{font-size:0.67rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:8px}
+.nav-back:hover{color:var(--white)}
+/* PAGE HEAD */
+.page-head{padding:106px 48px 60px;background:var(--surface);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.page-head::before{content:'REVIEWS';position:absolute;right:-2%;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:22vw;color:rgba(255,255,255,0.018);line-height:1;pointer-events:none;white-space:nowrap}
+.ph-label{font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.ph-label::before{content:'';width:16px;height:1px;background:var(--dim)}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,5.5rem);text-transform:uppercase;letter-spacing:0.02em;line-height:0.9;color:var(--pure);position:relative;z-index:1}
+.ph-stats{display:flex;align-items:center;gap:24px;margin-top:20px;flex-wrap:wrap}
+.ph-avg{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1;color:var(--pure)}
+.ph-stars{display:flex;gap:3px}
+.ph-stars span{font-size:1.1rem;color:var(--pure)}
+.ph-stars span.empty{color:var(--dim)}
+.ph-count{font-size:0.75rem;font-weight:300;color:var(--mid)}
+/* LAYOUT */
+.page-body{max-width:1100px;margin:0 auto;padding:56px 48px 88px;display:grid;grid-template-columns:300px 1fr;gap:40px;align-items:start}
+/* SIDEBAR */
+.sidebar{position:sticky;top:76px}
+/* WRITE A REVIEW */
+.write-box{background:var(--card);border:1px solid var(--border);margin-bottom:12px}
+.wb-head{padding:16px 20px;border-bottom:1px solid var(--border);font-size:0.65rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--pale)}
+.wb-body{padding:20px}
+.wf-label{font-size:0.58rem;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin-bottom:8px;display:block}
+.wf-input,.wf-textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.1);padding:9px 0;color:var(--white);font-family:'Bricolage Grotesque',sans-serif;font-size:0.9rem;font-weight:300;outline:none;transition:border-color .2s;resize:none}
+.wf-input:focus,.wf-textarea:focus{border-color:rgba(255,255,255,0.3)}
+.wf-input::placeholder,.wf-textarea::placeholder{color:rgba(255,255,255,0.13)}
+.wf-textarea{min-height:90px;line-height:1.6}
+.wf-group{margin-bottom:18px}
+/* STAR PICKER */
+.star-picker{display:flex;gap:6px;margin-bottom:4px}
+.star-pick-btn{background:none;border:none;cursor:pointer;font-size:1.4rem;color:var(--dim);transition:color .15s,transform .15s;padding:0;line-height:1}
+.star-pick-btn:hover,.star-pick-btn.on{color:var(--pure)}
+.star-pick-btn:hover{transform:scale(1.15)}
+.wf-submit{width:100%;padding:12px;background:var(--pure);color:#000;font-family:'Bricolage Grotesque',sans-serif;font-size:0.68rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;margin-top:6px;transition:opacity .2s}
+.wf-submit:hover{opacity:0.85}
+.wf-error{font-size:0.72rem;font-weight:300;color:#e05a5a;margin-top:8px;display:none}
+.wf-success{font-size:0.75rem;font-weight:300;color:#5cba6a;margin-top:8px;display:none}
+/* FILTER BOX */
+.filter-box{background:var(--card);border:1px solid var(--border)}
+.fb-head{padding:14px 20px;border-bottom:1px solid var(--border);font-size:0.62rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid)}
+.fb-body{padding:14px 20px}
+.filter-row{margin-bottom:14px}
+.filter-row:last-child{margin-bottom:0}
+.filter-label{font-size:0.58rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;display:block}
+.filter-btns{display:flex;gap:4px;flex-wrap:wrap}
+.fbtn{background:transparent;border:1px solid var(--border);color:var(--mid);font-family:'Bricolage Grotesque',sans-serif;font-size:0.65rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .18s}
+.fbtn:hover{border-color:var(--border2);color:var(--white)}
+.fbtn.active{background:var(--pure);color:#000;border-color:var(--pure)}
+/* REVIEWS GRID */
+.reviews-main{}
+.reviews-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px}
+.rm-count{font-size:0.68rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid)}
+.reviews-grid{display:flex;flex-direction:column;gap:2px}
+.rv-card{background:var(--card);border:1px solid var(--border);padding:26px 24px 30px;transition:border-color .25s}
+.rv-card:hover{border-color:var(--border2)}
+.rv-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:12px}
+.rv-stars{display:flex;gap:2px}
+.rv-stars span{color:var(--pure);font-size:0.75rem}
+.rv-stars span.empty{color:var(--dim)}
+.rv-date{font-size:0.62rem;color:var(--dim);flex-shrink:0}
+.rv-text{font-size:0.88rem;font-weight:300;line-height:1.75;color:var(--mid);margin-bottom:16px;font-style:italic}
+.rv-author{font-size:0.7rem;font-weight:500;color:var(--pale);letter-spacing:0.06em}
+.no-results{font-size:0.84rem;font-weight:300;color:var(--dim);padding:60px 0;text-align:center}
+/* LOAD MORE */
+.load-more{width:100%;padding:13px;background:transparent;border:1px solid var(--border);color:var(--mid);font-family:'Bricolage Grotesque',sans-serif;font-size:0.68rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:border-color .2s,color .2s}
+.load-more:hover{border-color:var(--border2);color:var(--white)}
+footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.foot-logo{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.08em;color:rgba(255,255,255,0.2);text-decoration:none}
+.foot-logo sub{font-size:0.45em;color:var(--dim)}
+.foot-copy{font-size:0.6rem;color:rgba(255,255,255,0.1);width:100%;padding-top:16px;border-top:1px solid var(--border)}
+@media(max-width:860px){.page-body{grid-template-columns:1fr;padding:40px 24px 64px}.sidebar{position:static}}
+@media(max-width:640px){nav{padding:0 20px}.page-head{padding:84px 24px 44px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">CYDecals<sub>.co</sub></a>
+  <a href="index.html" class="nav-back">← Back</a>
+</nav>
+
+<div class="page-head">
+  <div class="ph-label">Customer Reviews</div>
+  <h1 class="ph-title">What Riders<br>Are Saying</h1>
+  <div class="ph-stats">
+    <div class="ph-avg" id="ph-avg">—</div>
+    <div class="ph-stars" id="ph-stars"></div>
+    <div class="ph-count" id="ph-count">No reviews yet</div>
+  </div>
+</div>
+
+<div class="page-body">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <!-- WRITE REVIEW -->
+    <div class="write-box">
+      <div class="wb-head">Leave a Review</div>
+      <div class="wb-body">
+        <div class="wf-group">
+          <label class="wf-label">Your Name</label>
+          <input class="wf-input" type="text" id="rv-name" placeholder="First name or nickname" maxlength="40">
+        </div>
+        <div class="wf-group">
+          <label class="wf-label">Rating</label>
+          <div class="star-picker" id="star-picker">
+            <button class="star-pick-btn" data-v="1" type="button">★</button>
+            <button class="star-pick-btn" data-v="2" type="button">★</button>
+            <button class="star-pick-btn" data-v="3" type="button">★</button>
+            <button class="star-pick-btn" data-v="4" type="button">★</button>
+            <button class="star-pick-btn" data-v="5" type="button">★</button>
+          </div>
+        </div>
+        <div class="wf-group">
+          <label class="wf-label">Your Review</label>
+          <textarea class="wf-textarea" id="rv-comment" placeholder="Tell us about your order..." maxlength="500"></textarea>
+        </div>
+        <button class="wf-submit" onclick="submitReview()">Post Review</button>
+        <div class="wf-error" id="rv-error"></div>
+        <div class="wf-success" id="rv-success">Review posted. Thanks!</div>
+      </div>
+    </div>
+
+    <!-- FILTER -->
+    <div class="filter-box">
+      <div class="fb-head">Filter</div>
+      <div class="fb-body">
+        <div class="filter-row">
+          <span class="filter-label">Stars</span>
+          <div class="filter-btns">
+            <button class="fbtn active" data-filter-stars="0" onclick="setStarFilter(0,this)">All</button>
+            <button class="fbtn" data-filter-stars="5" onclick="setStarFilter(5,this)">5★</button>
+            <button class="fbtn" data-filter-stars="4" onclick="setStarFilter(4,this)">4★</button>
+            <button class="fbtn" data-filter-stars="3" onclick="setStarFilter(3,this)">3★</button>
+            <button class="fbtn" data-filter-stars="2" onclick="setStarFilter(2,this)">2★</button>
+            <button class="fbtn" data-filter-stars="1" onclick="setStarFilter(1,this)">1★</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Sort</span>
+          <div class="filter-btns">
+            <button class="fbtn active" data-sort="recent" onclick="setSort('recent',this)">Most Recent</button>
+            <button class="fbtn" data-sort="highest" onclick="setSort('highest',this)">Highest</button>
+            <button class="fbtn" data-sort="lowest" onclick="setSort('lowest',this)">Lowest</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS MAIN -->
+  <div class="reviews-main">
+    <div class="reviews-meta">
+      <span class="rm-count" id="rm-count">0 reviews</span>
+    </div>
+    <div class="reviews-grid" id="reviews-grid">
+      <div class="no-results">No reviews yet. Be the first.</div>
+    </div>
+    <button class="load-more" id="load-more-btn" style="display:none" onclick="loadMore()">Load More</button>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="foot-logo">CYDecals<sub>.co</sub></a>
+  <p class="foot-copy">© 2025 CYDecals.co — All rights reserved.</p>
+</footer>
+
+<script>
+// ── STORAGE ──────────────────────────────────────────────────────
+const K_REVIEWS = 'cyd_reviews';
+function getReviews(){try{return JSON.parse(localStorage.getItem(K_REVIEWS)||'[]')}catch{return[]}}
+function saveReviews(r){localStorage.setItem(K_REVIEWS,JSON.stringify(r))}
+
+// ── PROFANITY FILTER ─────────────────────────────────────────────
+// Core bad words + common bypasses handled by normalization
+const BAD_WORDS = [
+  'fuck','shit','bitch','ass','asshole','bastard','damn','cunt','cock','dick',
+  'pussy','piss','crap','whore','slut','fag','faggot','retard','nigger','nigga',
+  'kike','spic','chink','wetback','tranny','rape','kill yourself','kys',
+  'sex','porn','nude','naked','boob','tit','penis','vagina',
+  'hell','bitch','idiot','stupid','dumb','loser','moron','imbecile'
+];
+
+function normalizeText(str) {
+  return str.toLowerCase()
+    .replace(/0/g,'o').replace(/1/g,'i').replace(/3/g,'e').replace(/4/g,'a')
+    .replace(/5/g,'s').replace(/8/g,'b').replace(/@/g,'a').replace(/\$/g,'s')
+    .replace(/!/g,'i').replace(/\+/g,'t').replace(/ph/g,'f')
+    .replace(/[^a-z]/g,''); // strip spaces, dots, dashes etc so "f u c k" → "fuck"
+}
+
+// Also check with spaces stripped selectively (f.u.c.k, f-u-c-k, f uck etc)
+function containsBadWord(text) {
+  const norm = normalizeText(text);
+  // full normalized (no spaces)
+  for (const w of BAD_WORDS) {
+    const nw = normalizeText(w);
+    if (norm.includes(nw)) return true;
+  }
+  // also check original lowercased with spaces removed
+  const stripped = text.toLowerCase().replace(/\s+/g,'');
+  for (const w of BAD_WORDS) {
+    if (stripped.includes(w)) return true;
+  }
+  // check word-by-word on original
+  const words = text.toLowerCase().split(/\s+/);
+  for (const word of words) {
+    const nw = normalizeText(word);
+    for (const bw of BAD_WORDS) {
+      if (nw.includes(normalizeText(bw))) return true;
+    }
+  }
+  return false;
+}
+
+function hasInappropriateContent(text) {
+  if (containsBadWord(text)) return true;
+  // Check for suspicious patterns: repeated chars trying to spell bad word
+  const spaceless = text.toLowerCase().replace(/[\s\.\-\_\*\+]/g,'');
+  for (const w of BAD_WORDS) {
+    if (spaceless.includes(w)) return true;
+  }
+  return false;
+}
+
+// ── STAR PICKER ──────────────────────────────────────────────────
+let selectedStars = 0;
+document.querySelectorAll('.star-pick-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    selectedStars = parseInt(btn.dataset.v);
+    document.querySelectorAll('.star-pick-btn').forEach(b => {
+      b.classList.toggle('on', parseInt(b.dataset.v) <= selectedStars);
+    });
+  });
+  btn.addEventListener('mouseover', () => {
+    const v = parseInt(btn.dataset.v);
+    document.querySelectorAll('.star-pick-btn').forEach(b => {
+      b.style.color = parseInt(b.dataset.v) <= v ? 'var(--pure)' : 'var(--dim)';
+    });
+  });
+  btn.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.star-pick-btn').forEach(b => {
+      b.style.color = parseInt(b.dataset.v) <= selectedStars ? 'var(--pure)' : 'var(--dim)';
+    });
+  });
+});
+
+// ── SUBMIT REVIEW ────────────────────────────────────────────────
+function submitReview() {
+  const nameEl = document.getElementById('rv-name');
+  const commentEl = document.getElementById('rv-comment');
+  const errEl = document.getElementById('rv-error');
+  const sucEl = document.getElementById('rv-success');
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
+
+  const name = nameEl.value.trim();
+  const comment = commentEl.value.trim();
+
+  if (!name) { showErr('Please enter your name.'); return; }
+  if (name.length < 2) { showErr('Name is too short.'); return; }
+  if (selectedStars === 0) { showErr('Please select a star rating.'); return; }
+  if (!comment) { showErr('Please write a comment.'); return; }
+  if (comment.length < 10) { showErr('Comment is too short.'); return; }
+
+  // Profanity check on both name and comment
+  if (hasInappropriateContent(name)) { showErr('Your name contains inappropriate content.'); return; }
+  if (hasInappropriateContent(comment)) { showErr('Your review contains inappropriate language. Please keep it clean.'); return; }
+
+  const reviews = getReviews();
+  reviews.push({ name, stars: selectedStars, comment, ts: Date.now(), approved: true });
+  saveReviews(reviews);
+
+  nameEl.value = ''; commentEl.value = ''; selectedStars = 0;
+  document.querySelectorAll('.star-pick-btn').forEach(b => { b.classList.remove('on'); b.style.color = ''; });
+
+  sucEl.style.display = 'block';
+  setTimeout(() => sucEl.style.display = 'none', 4000);
+  renderAll();
+}
+
+function showErr(msg) {
+  const el = document.getElementById('rv-error');
+  el.textContent = msg; el.style.display = 'block';
+}
+
+// ── FILTER / SORT STATE ──────────────────────────────────────────
+let filterStars = 0, sortMode = 'recent', page = 1;
+const PER_PAGE = 10;
+
+function setStarFilter(v, btn) {
+  filterStars = v; page = 1;
+  document.querySelectorAll('[data-filter-stars]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+function setSort(v, btn) {
+  sortMode = v; page = 1;
+  document.querySelectorAll('[data-sort]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+function loadMore() { page++; renderGrid(); }
+
+// ── RENDER ────────────────────────────────────────────────────────
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function starsHtml(n) {
+  return [1,2,3,4,5].map(i=>`<span class="${i<=n?'':'empty'}">★</span>`).join('');
+}
+
+function renderHeader() {
+  const reviews = getReviews().filter(r => r.approved !== false);
+  const avgEl = document.getElementById('ph-avg');
+  const starsEl = document.getElementById('ph-stars');
+  const countEl = document.getElementById('ph-count');
+  if (reviews.length === 0) {
+    avgEl.textContent = '—'; starsEl.innerHTML = ''; countEl.textContent = 'No reviews yet';
+  } else {
+    const avg = (reviews.reduce((s,r)=>s+r.stars,0)/reviews.length);
+    avgEl.textContent = avg.toFixed(1);
+    starsEl.innerHTML = starsHtml(Math.round(avg));
+    countEl.textContent = reviews.length + ' review' + (reviews.length!==1?'s':'');
+  }
+}
+
+function renderGrid() {
+  const all = getReviews().filter(r => r.approved !== false);
+  let filtered = filterStars === 0 ? all : all.filter(r => r.stars === filterStars);
+
+  if (sortMode === 'recent')  filtered.sort((a,b) => b.ts - a.ts);
+  if (sortMode === 'highest') filtered.sort((a,b) => b.stars - a.stars);
+  if (sortMode === 'lowest')  filtered.sort((a,b) => a.stars - b.stars);
+
+  const countEl = document.getElementById('rm-count');
+  countEl.textContent = filtered.length + ' review' + (filtered.length!==1?'s':'');
+
+  const visible = filtered.slice(0, page * PER_PAGE);
+  const grid = document.getElementById('reviews-grid');
+  const loadBtn = document.getElementById('load-more-btn');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="no-results">' + (filterStars ? 'No ' + filterStars + '-star reviews yet.' : 'No reviews yet. Be the first.') + '</div>';
+    loadBtn.style.display = 'none';
+    return;
+  }
+
+  grid.innerHTML = visible.map(r => `
+    <div class="rv-card">
+      <div class="rv-top">
+        <div class="rv-stars">${starsHtml(r.stars)}</div>
+        <div class="rv-date">${new Date(r.ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
+      </div>
+      <p class="rv-text">${escHtml(r.comment)}</p>
+      <div class="rv-author">${escHtml(r.name)}</div>
+    </div>`).join('');
+
+  loadBtn.style.display = visible.length < filtered.length ? 'block' : 'none';
+}
+
+function renderAll() { renderHeader(); renderGrid(); }
+
+renderAll();
+</script>
+</body>
+</html>

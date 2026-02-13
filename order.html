@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order — CYDecals.co</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0a0a;
+  --near-black: #111111;
+  --dark: #1a1a1a;
+  --mid-dark: #222222;
+  --mid: #555555;
+  --light-mid: #888888;
+  --light: #cccccc;
+  --near-white: #e8e8e8;
+  --white: #f5f5f5;
+  --pure-white: #ffffff;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.16);
+  --green: #1db954;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--near-white);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 998;
+  mix-blend-mode: screen;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 40px;
+  background: rgba(10,10,10,0.96); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.1em; color: var(--pure-white); text-decoration: none; }
+.logo em { font-style: normal; color: var(--light-mid); }
+.nav-back {
+  font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--mid); text-decoration: none;
+  transition: color .2s; display: flex; align-items: center; gap: 8px;
+}
+.nav-back:hover { color: var(--near-white); }
+
+/* PAGE HEADER */
+.page-head {
+  padding: 108px 48px 60px;
+  background: var(--near-black);
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.page-head::before {
+  content: 'ORDER';
+  position: absolute; right: -2%; top: 50%; transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif; font-size: 22vw;
+  color: rgba(255,255,255,0.02); line-height: 1;
+  pointer-events: none; white-space: nowrap;
+}
+
+.ph-kicker {
+  font-size: 0.62rem; font-weight: 400; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--mid); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.ph-kicker::before { content: ''; width: 20px; height: 1px; background: var(--mid); }
+
+.ph-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.9;
+  color: var(--pure-white); position: relative; z-index: 1;
+}
+.ph-sub {
+  font-size: 0.84rem; font-weight: 300; color: var(--mid);
+  margin-top: 18px; max-width: 420px; line-height: 1.65;
+}
+
+/* LAYOUT */
+.order-wrap {
+  max-width: 1100px; margin: 0 auto;
+  padding: 64px 48px 88px;
+  display: grid; grid-template-columns: 1fr 300px;
+  gap: 48px; align-items: start;
+}
+
+/* STEP BLOCKS */
+.step-block { margin-bottom: 60px; }
+.step-header { display: flex; align-items: center; gap: 18px; margin-bottom: 32px; }
+.step-n { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; line-height: 1; color: rgba(255,255,255,0.04); flex-shrink: 0; user-select: none; }
+.step-title { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--pure-white); }
+.step-subtitle { font-size: 0.73rem; font-weight: 300; color: var(--mid); margin-top: 3px; }
+.step-divider { height: 1px; background: var(--border); margin: 52px 0; }
+
+/* STYLE GRID */
+.style-pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.sp-card {
+  position: relative; overflow: hidden;
+  background: var(--dark); cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color .2s;
+  aspect-ratio: 16/9; display: block;
+}
+.sp-card:hover { border-color: rgba(255,255,255,0.18); }
+.sp-card.sel { border-color: var(--pure-white); }
+.sp-card input { display: none; }
+.sp-ph {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: #191613; overflow: hidden;
+}
+.sp-ph::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 21px);
+}
+.sp-ph-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; color: rgba(255,255,255,0.05);
+  letter-spacing: 0.1em; user-select: none; position: relative; z-index: 1;
+}
+.sp-card img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; filter: saturate(0); transition: transform .4s; }
+.sp-card:hover img { transform: scale(1.05); }
+.sp-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.92), transparent);
+  padding: 24px 12px 10px; display: flex; align-items: flex-end; justify-content: space-between;
+}
+.sp-name { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pure-white); }
+.sp-badge { font-family: 'Bebas Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.12); padding: 2px 7px; }
+.sp-check {
+  position: absolute; top: 8px; right: 8px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--pure-white); display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .2s; z-index: 2;
+}
+.sp-card.sel .sp-check { opacity: 1; }
+.sp-check svg { width: 9px; height: 9px; }
+
+/* MATERIAL GRID */
+.mat-pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.mp-card {
+  position: relative; overflow: hidden;
+  background: var(--near-black); cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color .2s; aspect-ratio: 3/4; display: block;
+}
+.mp-card:hover { border-color: rgba(255,255,255,0.18); }
+.mp-card.sel { border-color: var(--pure-white); }
+.mp-card input { display: none; }
+.mp-ph {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1c1c1c 0%, #141414 100%); overflow: hidden;
+}
+.mp-ph::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 18px, rgba(255,255,255,0.02) 18px, rgba(255,255,255,0.02) 19px);
+}
+.mp-ph-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: rgba(255,255,255,0.06); line-height: 1; position: relative; z-index: 1;
+}
+.mp-card img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; filter: saturate(0); transition: transform .4s; }
+.mp-card:hover img { transform: scale(1.04); }
+.mp-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(10,10,10,0.94); padding: 14px 16px;
+}
+.mp-name { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pure-white); }
+.mp-desc { font-size: 0.72rem; font-weight: 300; color: var(--mid); margin-top: 3px; }
+.mp-check {
+  position: absolute; top: 8px; right: 8px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--pure-white); display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .2s; z-index: 2;
+}
+.mp-card.sel .mp-check { opacity: 1; }
+.mp-check svg { width: 9px; height: 9px; }
+
+/* FORM */
+.form-box {
+  background: var(--near-black);
+  border: 1px solid var(--border);
+}
+.form-box-inner { padding: 28px 28px 32px; }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.f-group { display: flex; flex-direction: column; gap: 8px; }
+.f-group.full { grid-column: 1/-1; }
+.f-label {
+  font-size: 0.58rem; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--mid);
+}
+.f-input, .f-textarea {
+  background: transparent; border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 9px 0; color: var(--near-white);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.92rem; font-weight: 300;
+  outline: none; transition: border-color .2s; resize: none; width: 100%;
+}
+.f-input:focus, .f-textarea:focus { border-color: rgba(255,255,255,0.35); }
+.f-input::placeholder, .f-textarea::placeholder { color: rgba(255,255,255,0.14); }
+.f-textarea { min-height: 110px; line-height: 1.65; }
+.f-hint { font-size: 0.7rem; font-weight: 300; color: var(--mid); margin-top: 6px; line-height: 1.5; }
+
+/* SIDEBAR */
+.sidebar { position: sticky; top: 80px; }
+
+.summary-box {
+  background: var(--near-black);
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+.sb-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.6rem; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--mid);
+}
+.sb-body { padding: 14px 18px; }
+.sb-row {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.sb-row:last-child { border-bottom: none; padding-bottom: 0; }
+.sb-key { font-size: 0.62rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid); flex-shrink: 0; }
+.sb-val { font-size: 0.82rem; font-weight: 400; color: var(--pure-white); text-align: right; }
+.sb-val.empty { color: rgba(255,255,255,0.15); font-weight: 300; font-size: 0.78rem; font-style: italic; }
+
+/* CASHAPP */
+.cashapp-box {
+  background: var(--near-black);
+  border: 1px solid var(--border);
+  padding: 18px;
+  margin-bottom: 10px;
+}
+.ca-label {
+  font-size: 0.6rem; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 12px;
+}
+.ca-btn {
+  display: block; width: 100%; padding: 12px;
+  background: var(--green); color: #000;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  text-decoration: none; text-align: center;
+  transition: opacity .2s; margin-bottom: 10px;
+}
+.ca-btn:hover { opacity: 0.85; }
+.ca-note { font-size: 0.72rem; font-weight: 300; color: var(--mid); line-height: 1.55; }
+.ca-note strong { color: var(--light-mid); font-weight: 400; }
+
+/* SUBMIT */
+.submit-btn {
+  width: 100%; padding: 14px;
+  background: var(--pure-white); color: var(--black);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  border: none; cursor: pointer; transition: background .2s;
+}
+.submit-btn:hover { background: var(--near-white); }
+.submit-note { font-size: 0.68rem; font-weight: 300; color: var(--mid); text-align: center; margin-top: 10px; line-height: 1.55; }
+
+/* ERRORS */
+@keyframes shake { 0%,100% { transform: none; } 25%,75% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
+.err { border-color: rgba(255,80,80,0.6) !important; animation: shake 0.3s; }
+.err-outline { outline: 1px solid rgba(255,80,80,0.4); }
+
+/* MODAL */
+.modal-bg {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+  z-index: 200; display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.modal-bg.show { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--near-black);
+  border: 1px solid var(--border-strong);
+  max-width: 460px; width: 100%;
+  transform: translateY(20px); transition: transform .35s;
+  overflow: hidden;
+}
+.modal-bg.show .modal { transform: none; }
+.modal-top { background: var(--pure-white); padding: 36px 36px 28px; }
+.modal-flag { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--black); line-height: 1; }
+.modal-flag-sub { font-size: 0.7rem; font-weight: 400; color: rgba(10,10,10,0.4); letter-spacing: 0.12em; margin-top: 5px; text-transform: uppercase; }
+.modal-body { padding: 28px 36px 36px; }
+.modal-steps { margin-bottom: 24px; }
+.m-step { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.m-step:last-child { border-bottom: none; }
+.ms-n { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: rgba(255,255,255,0.1); flex-shrink: 0; line-height: 1.1; min-width: 28px; }
+.ms-t { font-size: 0.83rem; font-weight: 300; color: var(--light-mid); line-height: 1.6; }
+.ms-t strong { color: var(--near-white); font-weight: 400; }
+.modal-cashapp {
+  display: block; width: 100%; padding: 13px;
+  background: var(--green); color: #000;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; text-decoration: none; text-align: center;
+  transition: opacity .2s; margin-bottom: 10px;
+}
+.modal-cashapp:hover { opacity: 0.85; }
+.modal-close {
+  width: 100%; padding: 12px;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--mid); font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  cursor: pointer; transition: border-color .2s, color .2s;
+}
+.modal-close:hover { border-color: var(--border-strong); color: var(--near-white); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+}
+.foot-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.2); text-decoration: none; }
+.foot-logo em { font-style: normal; color: var(--mid); }
+.foot-copy { font-size: 0.62rem; color: rgba(255,255,255,0.12); }
+
+/* RESPONSIVE */
+@media (max-width: 860px) {
+  .order-wrap { grid-template-columns: 1fr; padding: 40px 24px 64px; }
+  .sidebar { position: static; }
+  nav { padding: 0 20px; }
+  .page-head { padding: 88px 24px 48px; }
+}
+@media (max-width: 520px) {
+  .style-pick { grid-template-columns: 1fr 1fr; }
+  .mat-pick { grid-template-columns: 1fr; }
+  .f-row { grid-template-columns: 1fr; }
+  footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">CY<em>Decals</em></a>
+  <a href="index.html" class="nav-back">← Back</a>
+</nav>
+
+<div class="page-head">
+  <p class="ph-kicker">Build Your Custom Plate</p>
+  <h1 class="ph-title">Place<br>Your Order</h1>
+  <p class="ph-sub">Fill in each step below. We'll reach out to confirm, you pay via Cash App, and we get it made.</p>
+</div>
+
+<div class="order-wrap">
+
+  <!-- LEFT COLUMN -->
+  <div>
+
+    <!-- STEP 1 -->
+    <div class="step-block">
+      <div class="step-header">
+        <span class="step-n">01</span>
+        <div>
+          <div class="step-title">Choose Your Style</div>
+          <div class="step-subtitle">Select one of the 6 designs below</div>
+        </div>
+      </div>
+
+      <div class="style-pick">
+        <label class="sp-card" data-name="Classic Block">
+          <input type="radio" name="style" value="Classic Block">
+          <div class="sp-ph"><div class="sp-ph-num">999</div></div>
+          <div class="sp-bar"><span class="sp-name">Classic Block</span><span class="sp-badge">01</span></div>
+          <div class="sp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+        <label class="sp-card" data-name="Outlined Race">
+          <input type="radio" name="style" value="Outlined Race">
+          <div class="sp-ph"><div class="sp-ph-num">999</div></div>
+          <div class="sp-bar"><span class="sp-name">Outlined Race</span><span class="sp-badge">02</span></div>
+          <div class="sp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+        <label class="sp-card" data-name="Clean White">
+          <input type="radio" name="style" value="Clean White">
+          <div class="sp-ph"><div class="sp-ph-num">999</div></div>
+          <div class="sp-bar"><span class="sp-name">Clean White</span><span class="sp-badge">03</span></div>
+          <div class="sp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+        <label class="sp-card" data-name="Gold Edition">
+          <input type="radio" name="style" value="Gold Edition">
+          <div class="sp-ph"><div class="sp-ph-num">999</div></div>
+          <div class="sp-bar"><span class="sp-name">Gold Edition</span><span class="sp-badge">04</span></div>
+          <div class="sp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+        <label class="sp-card" data-name="Aggressive Red">
+          <input type="radio" name="style" value="Aggressive Red">
+          <div class="sp-ph"><div class="sp-ph-num">999</div></div>
+          <div class="sp-bar"><span class="sp-name">Aggressive Red</span><span class="sp-badge">05</span></div>
+          <div class="sp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+        <label class="sp-card" data-name="Minimal">
+          <input type="radio" name="style" value="Minimal">
+          <div class="sp-ph"><div class="sp-ph-num">999</div></div>
+          <div class="sp-bar"><span class="sp-name">Minimal</span><span class="sp-badge">06</span></div>
+          <div class="sp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 2 -->
+    <div class="step-block">
+      <div class="step-header">
+        <span class="step-n">02</span>
+        <div>
+          <div class="step-title">Choose Your Material</div>
+          <div class="step-subtitle">Pick your finish</div>
+        </div>
+      </div>
+
+      <div class="mat-pick">
+        <label class="mp-card" data-name="Glitter">
+          <input type="radio" name="material" value="Glitter">
+          <div class="mp-ph"><div class="mp-ph-name">Glitter</div></div>
+          <div class="mp-bar"><div class="mp-name">Glitter</div><div class="mp-desc">Sparkle finish, turns heads on every straight</div></div>
+          <div class="mp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+        <label class="mp-card" data-name="Chrome">
+          <input type="radio" name="material" value="Chrome">
+          <div class="mp-ph"><div class="mp-ph-name">Chrome</div></div>
+          <div class="mp-bar"><div class="mp-name">Chrome</div><div class="mp-desc">Mirror-like metallic, clean and premium</div></div>
+          <div class="mp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+        <label class="mp-card" data-name="Vinyl">
+          <input type="radio" name="material" value="Vinyl">
+          <div class="mp-ph"><div class="mp-ph-name">Vinyl</div></div>
+          <div class="mp-bar"><div class="mp-name">Vinyl</div><div class="mp-desc">Durable, weather-resistant, bold colour</div></div>
+          <div class="mp-check"><svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 3 -->
+    <div class="step-block">
+      <div class="step-header">
+        <span class="step-n">03</span>
+        <div>
+          <div class="step-title">Your Customization</div>
+          <div class="step-subtitle">Tell us exactly what you want on the plate</div>
+        </div>
+      </div>
+      <div class="form-box">
+        <div class="form-box-inner">
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Your Number *</label>
+              <input class="f-input" type="text" id="plate-num" placeholder="e.g. 99, 121, 777" maxlength="4">
+            </div>
+            <div class="f-group">
+              <label class="f-label">Rider Name</label>
+              <input class="f-input" type="text" id="rider-name" placeholder="e.g. JAKE, SMITH">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-group full">
+              <label class="f-label">Logos, Colours & Extra Details *</label>
+              <textarea class="f-textarea" id="extra-details" placeholder="Describe your full design — logos, colours, layout, sponsor names, anything.&#10;&#10;e.g. 'White number with black outline, KTM logo bottom left, name top right'"></textarea>
+              <p class="f-hint">The more detail you give us, the better we can nail it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 4 -->
+    <div class="step-block">
+      <div class="step-header">
+        <span class="step-n">04</span>
+        <div>
+          <div class="step-title">Your Details</div>
+          <div class="step-subtitle">So we can confirm and send your receipt</div>
+        </div>
+      </div>
+      <div class="form-box">
+        <div class="form-box-inner">
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Full Name *</label>
+              <input class="f-input" type="text" id="cust-name" placeholder="Your name">
+            </div>
+            <div class="f-group">
+              <label class="f-label">Email *</label>
+              <input class="f-input" type="email" id="cust-email" placeholder="you@email.com">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Phone</label>
+              <input class="f-input" type="tel" id="cust-phone" placeholder="+1 000 000 0000">
+            </div>
+            <div class="f-group">
+              <label class="f-label">TikTok / Instagram</label>
+              <input class="f-input" type="text" id="cust-social" placeholder="@yourhandle">
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-group full">
+              <label class="f-label">Shipping Address *</label>
+              <input class="f-input" type="text" id="cust-address" placeholder="Street, city, state, zip, country">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="summary-box">
+      <div class="sb-head">Order Summary</div>
+      <div class="sb-body">
+        <div class="sb-row"><span class="sb-key">Style</span><span class="sb-val empty" id="s-style">Not selected</span></div>
+        <div class="sb-row"><span class="sb-key">Material</span><span class="sb-val empty" id="s-mat">Not selected</span></div>
+        <div class="sb-row"><span class="sb-key">Number</span><span class="sb-val empty" id="s-num">—</span></div>
+        <div class="sb-row"><span class="sb-key">Rider</span><span class="sb-val empty" id="s-rider">—</span></div>
+        <div class="sb-row"><span class="sb-key">Name</span><span class="sb-val empty" id="s-cust">—</span></div>
+      </div>
+    </div>
+
+    <div class="cashapp-box">
+      <div class="ca-label">Payment</div>
+      <a href="https://cash.app/$YOURCASHTAG" target="_blank" class="ca-btn">Pay via Cash App</a>
+      <div id="price-display" style="margin-top:12px;padding:14px 18px;background:var(--near-black);border:1px solid var(--border);font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--pure-white)">From $6.99</div>
+      <p class="ca-note">Pay after submitting. Include your <strong>name + plate number</strong> in the Cash App note. We'll confirm once received.</p>
+    </div>
+
+    <button class="submit-btn" onclick="submitOrder()">Submit Order Request</button>
+    <p class="submit-note">You'll get an email receipt and we'll reach out to confirm your order.</p>
+  </div>
+
+</div>
+
+<footer>
+  <a href="index.html" class="foot-logo">CY<em>Decals</em>.co</a>
+  <span class="foot-copy">© 2025 CYDecals.co</span>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-flag">Order<br>Received</div>
+      <div class="modal-flag-sub">CYDecals.co</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-steps">
+        <div class="m-step"><span class="ms-n">1</span><p class="ms-t">Check your <strong>email — your receipt has been sent</strong> to you.</p></div>
+        <div class="m-step"><span class="ms-n">2</span><p class="ms-t"><strong>Pay via Cash App</strong> — include your name and number in the note.</p></div>
+        <div class="m-step"><span class="ms-n">3</span><p class="ms-t">We'll confirm, <strong>make your plate</strong>, and ship it straight to you.</p></div>
+      </div>
+      <a href="https://cash.app/$YOURCASHTAG" target="_blank" class="modal-cashapp">Open Cash App & Pay</a>
+      <button class="modal-close" onclick="closeModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PRICING ──────────────────────────────────────────────────────
+const BASE = 6.99;
+const FINISH_PRICES = { 'Vinyl': 1.00, 'Chrome': 1.00, 'Glitter': 2.00 };
+
+function calcPrice() {
+  const mat = document.querySelector('.mp-card.sel input');
+  const finish = mat ? mat.value : null;
+  const extra = finish && FINISH_PRICES[finish] ? FINISH_PRICES[finish] : 0;
+  const total = BASE + extra;
+  const el = document.getElementById('price-display');
+  if (el) {
+    el.textContent = '$' + total.toFixed(2) + (finish ? ' (incl. ' + finish + ')' : ' base');
+  }
+}
+
+// ── STYLE + MATERIAL SELECTION ───────────────────────────────────
+document.querySelectorAll('.sp-card').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.sp-card').forEach(x => x.classList.remove('sel'));
+    c.classList.add('sel');
+    updateSummary();
+  });
+});
+
+document.querySelectorAll('.mp-card').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.mp-card').forEach(x => x.classList.remove('sel'));
+    c.classList.add('sel');
+    updateSummary();
+    calcPrice();
+  });
+});
+
+function updateSummary() {
+  const style = document.querySelector('.sp-card.sel input');
+  const mat = document.querySelector('.mp-card.sel input');
+  const num = document.getElementById('plate-num').value.trim();
+  const rider = document.getElementById('rider-name').value.trim();
+  const cust = document.getElementById('cust-name').value.trim();
+  set('s-style', style ? style.value : null, 'Not selected');
+  set('s-mat', mat ? mat.value : null, 'Not selected');
+  set('s-num', num, '—');
+  set('s-rider', rider, '—');
+  set('s-cust', cust, '—');
+}
+
+function set(id, val, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (val) { el.textContent = val; el.classList.remove('empty'); }
+  else { el.textContent = fallback; el.classList.add('empty'); }
+}
+
+['plate-num','rider-name','cust-name','cust-email','cust-address'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', updateSummary);
+});
+
+// ── SUBMIT ORDER ─────────────────────────────────────────────────
+function submitOrder() {
+  const style = document.querySelector('.sp-card.sel input');
+  const mat = document.querySelector('.mp-card.sel input');
+  const plateNum = document.getElementById('plate-num').value.trim();
+  const riderName = document.getElementById('rider-name').value.trim();
+  const details = document.getElementById('extra-details').value.trim();
+  const custName = document.getElementById('cust-name').value.trim();
+  const custEmail = document.getElementById('cust-email').value.trim();
+  const custPhone = document.getElementById('cust-phone').value.trim();
+  const custSocial = document.getElementById('cust-social').value.trim();
+  const custAddr = document.getElementById('cust-address').value.trim();
+
+  let ok = true;
+  if (!style) { flashGrid('.style-pick'); ok = false; }
+  if (!mat) { flashGrid('.mat-pick'); ok = false; }
+  [{id:'plate-num',v:plateNum},{id:'extra-details',v:details},{id:'cust-name',v:custName},{id:'cust-email',v:custEmail},{id:'cust-address',v:custAddr}].forEach(({id,v}) => {
+    if (!v) { const el = document.getElementById(id); el.classList.add('err'); setTimeout(() => el.classList.remove('err'), 800); ok = false; }
+  });
+  if (!ok) return;
+
+  // Save to live feed
+  const K_ORDERS = 'cyd_orders';
+  let orders = [];
+  try { orders = JSON.parse(localStorage.getItem(K_ORDERS) || '[]'); } catch {}
+  orders.push({
+    number: plateNum,
+    style: style.value,
+    finish: mat.value,
+    name: custName,
+    status: 'ordered',
+    ts: Date.now()
+  });
+  localStorage.setItem(K_ORDERS, JSON.stringify(orders));
+
+  const finish = mat ? mat.value : '';
+  const extra = FINISH_PRICES[finish] || 0;
+  const total = (BASE + extra).toFixed(2);
+
+  const sub = encodeURIComponent('NEW ORDER — #' + plateNum + ' — ' + custName);
+  const body = encodeURIComponent(
+    'NEW CYDECALS ORDER\n\nStyle: ' + style.value + '\nMaterial: ' + mat.value +
+    '\nNumber: ' + plateNum + '\nRider Name: ' + (riderName||'N/A') +
+    '\nPrice: $' + total + '\n\nDesign Notes:\n' + details +
+    '\n\nCUSTOMER\nName: ' + custName + '\nEmail: ' + custEmail +
+    '\nPhone: ' + (custPhone||'N/A') + '\nSocial: ' + (custSocial||'N/A') +
+    '\nShip to: ' + custAddr + '\n\nSent from CYDecals.co'
+  );
+  window.location.href = 'mailto:YOUREMAIL@gmail.com?subject=' + sub + '&body=' + body + '&cc=' + custEmail;
+  setTimeout(() => document.getElementById('modal').classList.add('show'), 900);
+}
+
+function flashGrid(sel) {
+  const el = document.querySelector(sel);
+  if (!el) return;
+  el.classList.add('err-outline');
+  setTimeout(() => el.classList.remove('err-outline'), 1200);
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+}
+</script>
+</body>
+</html>

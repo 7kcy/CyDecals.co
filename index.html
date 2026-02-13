@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYDecals — Custom Motocross Plates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0b0b;--surface:#111;--card:#161616;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--dim:#444;--mid:#777;--light:#aaa;--pale:#d8d8d8;--white:#f2f2f2;--pure:#fff}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Bricolage Grotesque',sans-serif;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;mix-blend-mode:screen}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(11,11,11,0.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.08em;color:var(--pure);text-decoration:none}
+.logo sub{font-size:0.45em;color:var(--dim);vertical-align:baseline;letter-spacing:0.1em}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:0.67rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-order{background:var(--pure)!important;color:#000!important;padding:9px 22px;font-weight:500!important;letter-spacing:0.15em!important}
+.hero{min-height:100svh;padding-top:58px;display:grid;grid-template-rows:1fr auto;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,0.018) 0,rgba(255,255,255,0.018) 1px,transparent 1px,transparent calc(100%/8));background-size:12.5% 100%}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 70% 50%,rgba(255,255,255,0.02) 0%,transparent 70%)}
+.hero-content{position:relative;z-index:1;padding:80px 48px 44px;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-tag{font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--dim);margin-bottom:28px;display:flex;align-items:center;gap:10px}
+.hero-tag::before{content:'';width:22px;height:1px;background:var(--dim);flex-shrink:0}
+.hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,16vw,15rem);line-height:0.84;letter-spacing:0.01em;color:var(--pure)}
+.hero-name .hollow{-webkit-text-stroke:1.5px rgba(255,255,255,0.18);color:transparent}
+.hero-bottom{position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:32px;padding:24px 48px 44px;border-top:1px solid var(--border)}
+.hero-copy{font-size:0.92rem;font-weight:300;line-height:1.8;color:var(--mid);max-width:380px}
+.hero-copy b{color:var(--pale);font-weight:500}
+.hero-actions{display:flex;gap:10px;align-items:center;flex-shrink:0}
+.btn{display:inline-block;font-size:0.68rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;padding:13px 28px;white-space:nowrap;transition:opacity .2s,border-color .2s}
+.btn-white{background:var(--pure);color:#000}.btn-white:hover{opacity:0.85}
+.btn-ghost{color:var(--white);border:1px solid var(--border2)}.btn-ghost:hover{border-color:rgba(255,255,255,0.35)}
+.ticker{overflow:hidden;background:var(--pure);height:36px;display:flex;align-items:center;white-space:nowrap}
+.ticker-inner{display:flex;animation:tickroll 28s linear infinite}
+@keyframes tickroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick{font-family:'Bebas Neue',sans-serif;font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;color:#000;padding:0 28px;flex-shrink:0}
+.label{font-size:0.6rem;font-weight:400;letter-spacing:0.26em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.label::before{content:'';width:16px;height:1px;background:var(--dim)}
+.h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,5vw,4rem);letter-spacing:0.02em;text-transform:uppercase;line-height:0.92;color:var(--pure)}
+.product-section{padding:100px 48px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.product-inner{max-width:1100px;margin:0 auto}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px}
+.p-card{background:var(--card);border:1px solid var(--border);padding:36px 30px 40px;position:relative;overflow:hidden;transition:border-color .25s}
+.p-card:hover{border-color:var(--border2)}
+.p-card-bg{position:absolute;top:-8px;right:-6px;font-family:'Bebas Neue',sans-serif;font-size:8rem;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;user-select:none}
+.p-num{font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:var(--dim);margin-bottom:20px}
+.p-title{font-size:0.75rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--pure);margin-bottom:12px}
+.p-body{font-size:0.86rem;font-weight:300;line-height:1.75;color:var(--mid)}
+.p-body b{color:var(--light);font-weight:400}
+.price-section{background:var(--pure);padding:80px 48px;text-align:center;position:relative;overflow:hidden}
+.price-section::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 32px,rgba(0,0,0,0.022) 32px,rgba(0,0,0,0.022) 33px),repeating-linear-gradient(90deg,transparent,transparent 32px,rgba(0,0,0,0.022) 32px,rgba(0,0,0,0.022) 33px);pointer-events:none}
+.price-label{font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(0,0,0,0.32);margin-bottom:12px;position:relative;z-index:1}
+.price-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,16vw,12rem);line-height:0.88;color:#000;letter-spacing:0.01em;position:relative;z-index:1}
+.price-currency{font-size:0.35em;vertical-align:super;line-height:1;color:rgba(0,0,0,0.4)}
+.price-desc{font-size:0.84rem;font-weight:300;color:rgba(0,0,0,0.42);margin-top:10px;position:relative;z-index:1}
+.price-finish-grid{display:flex;justify-content:center;gap:2px;margin-top:28px;position:relative;z-index:1;flex-wrap:wrap}
+.pf-pill{background:#000;color:var(--white);padding:10px 24px;font-size:0.7rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.pf-plus{color:rgba(255,255,255,0.35);font-size:0.85em}
+.price-ship{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(0,0,0,0.32);border:1px solid rgba(0,0,0,0.1);padding:7px 16px;position:relative;z-index:1}
+.feed-section{padding:80px 48px;background:var(--bg);border-top:1px solid var(--border)}
+.feed-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.feed-col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.feed-col-title{font-size:0.68rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--pale)}
+.live-dot-wrap{display:flex;align-items:center;gap:7px;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim)}
+.ldot{width:6px;height:6px;border-radius:50%;background:#3d9e4a;animation:ldpulse 2s ease-in-out infinite}
+@keyframes ldpulse{0%{box-shadow:0 0 0 0 rgba(61,158,74,0.5)}70%{box-shadow:0 0 0 6px rgba(61,158,74,0)}100%{box-shadow:0 0 0 0 rgba(61,158,74,0)}}
+.feed-list{display:flex;flex-direction:column;gap:2px;min-height:240px}
+.feed-item{background:var(--card);border:1px solid var(--border);padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.fi-left{display:flex;align-items:center;gap:12px}
+.fi-icon{width:28px;height:28px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fi-icon svg{width:12px;height:12px;stroke:var(--mid);fill:none;stroke-width:1.5}
+.fi-num{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.1em;color:var(--pure);line-height:1}
+.fi-meta{font-size:0.7rem;font-weight:300;color:var(--dim);margin-top:1px}
+.fi-time{font-size:0.6rem;color:var(--dim);letter-spacing:0.06em;flex-shrink:0}
+.fi-status{font-size:0.58rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;padding:3px 8px;flex-shrink:0}
+.fi-status.ordered{background:rgba(255,255,255,0.06);color:var(--mid)}
+.fi-status.shipped{background:rgba(61,158,74,0.12);color:#5cba6a}
+.feed-empty{font-size:0.8rem;font-weight:300;color:var(--dim);padding:40px 0;text-align:center}
+.counter-row{display:flex;gap:2px;margin-bottom:28px}
+.ctr-box{background:var(--card);border:1px solid var(--border);padding:18px 24px;flex:1}
+.ctr-n{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;line-height:1;color:var(--pure)}
+.ctr-l{font-size:0.6rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-top:2px}
+.reviews-strip{padding:80px 48px;background:var(--surface);border-top:1px solid var(--border)}
+.reviews-strip-inner{max-width:1100px;margin:0 auto}
+.reviews-strip-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;gap:20px}
+.view-all{font-size:0.66rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--border2);padding-bottom:3px;transition:color .2s,border-color .2s;white-space:nowrap}
+.view-all:hover{color:var(--white);border-color:rgba(255,255,255,0.35)}
+.reviews-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.rv-card{background:var(--card);border:1px solid var(--border);padding:26px 24px 30px;transition:border-color .25s}
+.rv-card:hover{border-color:var(--border2)}
+.rv-stars{display:flex;gap:2px;margin-bottom:14px}
+.rv-stars span{color:var(--pure);font-size:0.75rem}
+.rv-stars span.empty{color:var(--dim)}
+.rv-text{font-size:0.86rem;font-weight:300;line-height:1.75;color:var(--mid);margin-bottom:18px;font-style:italic}
+.rv-author{font-size:0.7rem;font-weight:500;color:var(--pale);letter-spacing:0.06em}
+.rv-date{font-size:0.65rem;font-weight:300;color:var(--dim);margin-top:2px}
+.no-reviews-msg{font-size:0.86rem;font-weight:300;color:var(--dim);padding:40px 0;text-align:center;grid-column:1/-1}
+.cta-section{background:var(--pure);padding:88px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 28px,rgba(0,0,0,0.015) 28px,rgba(0,0,0,0.015) 29px);pointer-events:none}
+.cta-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,7rem);text-transform:uppercase;letter-spacing:0.02em;line-height:0.9;color:#000;margin-bottom:18px;position:relative;z-index:1}
+.cta-sub{font-size:0.84rem;font-weight:300;color:rgba(0,0,0,0.38);margin-bottom:32px;position:relative;z-index:1}
+.btn-dark{display:inline-block;background:#000;color:var(--pure);font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:14px 36px;text-decoration:none;transition:opacity .2s;position:relative;z-index:1}
+.btn-dark:hover{opacity:0.8}
+footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.foot-logo{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.08em;color:rgba(255,255,255,0.2);text-decoration:none}
+.foot-logo sub{font-size:0.45em;color:var(--dim)}
+.foot-nav{display:flex;gap:24px}
+.foot-nav a{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s}
+.foot-nav a:hover{color:var(--white)}
+.foot-copy{font-size:0.6rem;color:rgba(255,255,255,0.1);width:100%;padding-top:16px;border-top:1px solid var(--border)}
+.sr{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.sr.in{opacity:1;transform:none}
+@media(max-width:900px){.product-grid{grid-template-columns:1fr}.feed-inner{grid-template-columns:1fr}.reviews-row{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){nav{padding:0 20px}.nav-links a:not(.nav-order){display:none}.hero-content{padding:60px 24px 32px}.hero-bottom{padding:20px 24px 36px;flex-direction:column;align-items:flex-start}.product-section,.reviews-strip,.feed-section,.price-section,.cta-section{padding:68px 24px}.reviews-row{grid-template-columns:1fr}.counter-row{flex-direction:column}footer{padding:22px 24px;flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">CYDecals<sub>.co</sub></a>
+  <div class="nav-links">
+    <a href="#product">What We Make</a>
+    <a href="#feed">Orders</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="order.html" class="nav-order">Order Now</a>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Motocross Number Plate Decals</p>
+    <div class="hero-name">CY<br><span class="hollow">Decals</span></div>
+  </div>
+  <div class="hero-bottom">
+    <p class="hero-copy"><b>Custom decals, made to order.</b> Pick your number, your finish, your colours — we cut and ship it built to your spec.</p>
+    <div class="hero-actions">
+      <a href="order.html" class="btn btn-white">Order Now — from $6.99</a>
+      <a href="#product" class="btn btn-ghost">What We Do</a>
+    </div>
+  </div>
+</section>
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="tick">CYDecals.co</span><span class="tick">/</span><span class="tick">Custom Number Plates</span><span class="tick">/</span><span class="tick">From $6.99</span><span class="tick">/</span><span class="tick">Glitter — Chrome — Vinyl</span><span class="tick">/</span><span class="tick">6 Styles</span><span class="tick">/</span><span class="tick">Pay via Cash App</span><span class="tick">/</span><span class="tick">Built for the Track</span><span class="tick">/</span>
+    <span class="tick">CYDecals.co</span><span class="tick">/</span><span class="tick">Custom Number Plates</span><span class="tick">/</span><span class="tick">From $6.99</span><span class="tick">/</span><span class="tick">Glitter — Chrome — Vinyl</span><span class="tick">/</span><span class="tick">6 Styles</span><span class="tick">/</span><span class="tick">Pay via Cash App</span><span class="tick">/</span><span class="tick">Built for the Track</span><span class="tick">/</span>
+  </div>
+</div>
+<section class="product-section" id="product">
+  <div class="product-inner">
+    <div class="sr"><div class="label">What We Make</div><div class="h2">Plates Built<br>To Your Spec</div></div>
+    <div class="product-grid">
+      <div class="p-card sr"><span class="p-card-bg">01</span><div class="p-num">01</div><div class="p-title">Number Plate Decals</div><p class="p-body">Your number, your colours, your layout. We offer <b>6 plate styles</b> — tell us exactly what you want and we build it from scratch.</p></div>
+      <div class="p-card sr"><span class="p-card-bg">02</span><div class="p-num">02</div><div class="p-title">Three Finishes</div><p class="p-body"><b>Vinyl</b> for durability. <b>Chrome</b> for the clean metallic look. <b>Glitter</b> if you want to stand out on the track.</p></div>
+      <div class="p-card sr"><span class="p-card-bg">03</span><div class="p-num">03</div><div class="p-title">Fully Custom</div><p class="p-body">Logos, sponsor names, rider name, any colour combo. Every plate is made from scratch — <b>no templates, no limits</b>.</p></div>
+    </div>
+  </div>
+</section>
+<div class="price-section">
+  <p class="price-label">Simple Pricing</p>
+  <div class="price-num"><span class="price-currency">$</span>6.99</div>
+  <p class="price-desc">Base price per decal. Finish adds a small fee.</p>
+  <div class="price-finish-grid">
+    <div class="pf-pill">Vinyl <span class="pf-plus">+$1.00</span></div>
+    <div class="pf-pill">Chrome <span class="pf-plus">+$1.00</span></div>
+    <div class="pf-pill">Glitter <span class="pf-plus">+$2.00</span></div>
+  </div>
+  <div class="price-ship">+ Shipping based on your location</div>
+</div>
+<section class="feed-section" id="feed">
+  <div class="feed-inner">
+    <div class="sr">
+      <div class="counter-row">
+        <div class="ctr-box"><div class="ctr-n" id="total-orders">0</div><div class="ctr-l">Total Orders</div></div>
+        <div class="ctr-box"><div class="ctr-n" id="total-shipped">0</div><div class="ctr-l">Shipped</div></div>
+        <div class="ctr-box"><div class="ctr-n" id="in-transit">0</div><div class="ctr-l">In Transit</div></div>
+      </div>
+      <div class="feed-col-head"><span class="feed-col-title">Recent Orders</span><span class="live-dot-wrap"><span class="ldot"></span>Live</span></div>
+      <div class="feed-list" id="orders-feed"><div class="feed-empty">No orders yet — be the first.</div></div>
+    </div>
+    <div class="sr">
+      <div style="height:88px"></div>
+      <div class="feed-col-head"><span class="feed-col-title">Recently Shipped</span><span class="live-dot-wrap"><span class="ldot" style="background:#888;animation:none"></span>Updates</span></div>
+      <div class="feed-list" id="shipped-feed"><div class="feed-empty">Nothing shipped yet.</div></div>
+    </div>
+  </div>
+</section>
+<section class="reviews-strip">
+  <div class="reviews-strip-inner">
+    <div class="reviews-strip-head sr">
+      <div><div class="label">Reviews</div><div class="h2" id="review-heading">Be the First</div></div>
+      <a href="reviews.html" class="view-all">All Reviews &amp; Leave One →</a>
+    </div>
+    <div class="reviews-row sr" id="home-reviews"><div class="no-reviews-msg">No reviews yet. Order yours and let us know how it went.</div></div>
+  </div>
+</section>
+<div class="cta-section sr">
+  <h2 class="cta-h2">Ready to Order?</h2>
+  <p class="cta-sub">Pick your style. Tell us what you want. Done.</p>
+  <a href="order.html" class="btn-dark">Build Your Plate</a>
+</div>
+<footer>
+  <a href="index.html" class="foot-logo">CYDecals<sub>.co</sub></a>
+  <div class="foot-nav"><a href="#product">What We Make</a><a href="#feed">Orders</a><a href="reviews.html">Reviews</a><a href="order.html">Order</a></div>
+  <p class="foot-copy">© 2025 CYDecals.co — All rights reserved.</p>
+</footer>
+<script>
+const K_ORDERS='cyd_orders',K_REVIEWS='cyd_reviews';
+function getOrders(){try{return JSON.parse(localStorage.getItem(K_ORDERS)||'[]')}catch{return[]}}
+function getReviews(){try{return JSON.parse(localStorage.getItem(K_REVIEWS)||'[]')}catch{return[]}}
+function timeAgo(ts){const d=Date.now()-ts,m=Math.floor(d/60000);if(m<1)return'just now';if(m<60)return m+'m ago';const h=Math.floor(m/60);if(h<24)return h+'h ago';return Math.floor(h/24)+'d ago'}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function animCount(id,target){const el=document.getElementById(id);if(!el)return;const from=parseInt(el.textContent)||0;if(from===target)return;const dur=800,start=performance.now();(function step(now){const t=Math.min((now-start)/dur,1),ease=1-Math.pow(1-t,3);el.textContent=Math.round(from+(target-from)*ease);if(t<1)requestAnimationFrame(step);else el.textContent=target})(start)}
+function renderFeed(){
+  const orders=getOrders();
+  animCount('total-orders',orders.length);
+  animCount('total-shipped',orders.filter(o=>o.status==='shipped').length);
+  animCount('in-transit',orders.filter(o=>o.status==='ordered').length);
+  const oEl=document.getElementById('orders-feed');
+  const recent=[...orders].reverse().slice(0,8);
+  oEl.innerHTML=recent.length===0?'<div class="feed-empty">No orders yet — be the first.</div>':recent.map(o=>`<div class="feed-item"><div class="fi-left"><div class="fi-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1"/></svg></div><div><div class="fi-num">#${escHtml(o.number||'—')}</div><div class="fi-meta">${escHtml(o.style||'Custom')} · ${escHtml(o.finish||'')}</div></div></div><span class="fi-status ordered">Ordered</span><span class="fi-time">${timeAgo(o.ts)}</span></div>`).join('');
+  const sEl=document.getElementById('shipped-feed');
+  const shipped=orders.filter(o=>o.status==='shipped').reverse().slice(0,8);
+  sEl.innerHTML=shipped.length===0?'<div class="feed-empty">Nothing shipped yet.</div>':shipped.map(o=>`<div class="feed-item"><div class="fi-left"><div class="fi-icon"><svg viewBox="0 0 24 24"><path d="M3 12h13M13 8l4 4-4 4"/><path d="M5 5H3v14h2M16 5h2a2 2 0 012 2v6"/></svg></div><div><div class="fi-num">#${escHtml(o.number||'—')}</div><div class="fi-meta">${escHtml(o.style||'Custom')} · ${escHtml(o.finish||'')}</div></div></div><span class="fi-status shipped">Shipped</span><span class="fi-time">${timeAgo(o.shippedTs||o.ts)}</span></div>`).join('');
+}
+function renderHomeReviews(){
+  const reviews=getReviews().filter(r=>r.approved!==false);
+  const el=document.getElementById('home-reviews'),head=document.getElementById('review-heading');
+  if(reviews.length===0){head.textContent='Be the First';el.innerHTML='<div class="no-reviews-msg">No reviews yet. Order yours and let us know how it went.</div>';return}
+  const avg=(reviews.reduce((s,r)=>s+r.stars,0)/reviews.length).toFixed(1);
+  head.textContent=avg+' / 5  —  '+reviews.length+' Review'+(reviews.length!==1?'s':'');
+  const top3=[...reviews].sort((a,b)=>b.ts-a.ts).slice(0,3);
+  el.innerHTML=top3.map(r=>`<div class="rv-card"><div class="rv-stars">${[1,2,3,4,5].map(i=>`<span class="${i<=r.stars?'':'empty'}">★</span>`).join('')}</div><p class="rv-text">${escHtml(r.comment)}</p><div class="rv-author">${escHtml(r.name)}</div><div class="rv-date">${new Date(r.ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div></div>`).join('');
+}
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*80);obs.unobserve(e.target)}})},{threshold:0.07});
+document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+renderFeed();renderHomeReviews();
+setInterval(()=>{renderFeed();renderHomeReviews()},15000);
+</script>
+</body>
+</html>
