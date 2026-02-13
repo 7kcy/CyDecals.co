@@ -553,7 +553,7 @@ footer {
 
     <div class="cashapp-box">
       <div class="ca-label">Payment</div>
-      <a href="https://cash.app/$YOURCASHTAG" target="_blank" class="ca-btn">Pay via Cash App</a>
+      <a href="https://cash.app/$Cy.Decals" target="_blank" class="ca-btn">Pay via Cash App</a>
       <div id="price-display" style="margin-top:12px;padding:14px 18px;background:var(--near-black);border:1px solid var(--border);font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--pure-white)">From $6.99</div>
       <p class="ca-note">Pay after submitting. Include your <strong>name + plate number</strong> in the Cash App note. We'll confirm once received.</p>
     </div>
@@ -582,7 +582,7 @@ footer {
         <div class="m-step"><span class="ms-n">2</span><p class="ms-t"><strong>Pay via Cash App</strong> — include your name and number in the note.</p></div>
         <div class="m-step"><span class="ms-n">3</span><p class="ms-t">We'll confirm, <strong>make your plate</strong>, and ship it straight to you.</p></div>
       </div>
-      <a href="https://cash.app/$YOURCASHTAG" target="_blank" class="modal-cashapp">Open Cash App & Pay</a>
+      <a href="https://cash.app/$CyDecals" target="_blank" class="modal-cashapp">Open Cash App & Pay</a>
       <button class="modal-close" onclick="closeModal()">Done</button>
     </div>
   </div>
@@ -695,7 +695,7 @@ function submitOrder() {
     '\nPhone: ' + (custPhone||'N/A') + '\nSocial: ' + (custSocial||'N/A') +
     '\nShip to: ' + custAddr + '\n\nSent from CYDecals.co'
   );
-  window.location.href = 'mailto:YOUREMAIL@gmail.com?subject=' + sub + '&body=' + body + '&cc=' + custEmail;
+  window.location.href = 'mailto:cydecals.co@gmail.com?subject=' + sub + '&body=' + body + '&cc=' + custEmail;
   setTimeout(() => document.getElementById('modal').classList.add('show'), 900);
 }
 
